@@ -7,5 +7,36 @@
 ## Docker commands used to get the application logs
 # TODO: insert the docker logs command
 
+## Logs from app.py (local - outside docker container) :
+
+<!-- (de_venv) E:\Projects\Udacity\DE_ND-techtrends\techtrends [main ≡ +16 ~1 -0 !]> python .\app.py
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://192.168.0.105:3111/ (Press CTRL+C to quit)
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:08] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:09] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:18] "GET /create HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:18] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "test_post" created!
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:25] "POST /create HTTP/1.1" 302 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:25] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:25] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "test_post" retrieved!
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:32] "GET /9 HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:32] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:"About Us" page retrieved!
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:34] "GET /about HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:17:34] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:37] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:37] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "Kubernetes Certification" retrieved!
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:42] "GET /6 HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:42] "GET /static/css/main.css HTTP/1.1" 304 - -->
+
 ## Logs from the container running the TechTrends application
 # TODO: paste logs from the Docker container 
