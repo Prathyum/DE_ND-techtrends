@@ -1,15 +1,20 @@
 ## Docker commands used to build the application 
 # TODO: insert the docker build command
 
+docker build . -t techtrends
+
 ## Docker commands used to run the application
 # TODO: insert the docker run command
+
+docker run -d --name techtrends -p 7111:3111 techtrends
 
 ## Docker commands used to get the application logs
 # TODO: insert the docker logs command
 
+
 ## Logs from app.py (local - outside docker container) :
 
-<!-- (de_venv) E:\Projects\Udacity\DE_ND-techtrends\techtrends [main ≡ +16 ~1 -0 !]> python .\app.py
+(de_venv) E:\Projects\Udacity\DE_ND-techtrends\techtrends [main ≡ +16 ~1 -0 !]> python .\app.py
  * Serving Flask app 'app' (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
@@ -36,7 +41,33 @@ INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:37] "GET / HTTP/1.1" 200 -
 INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:37] "GET /static/css/main.css HTTP/1.1" 304 -
 INFO:root:Article "Kubernetes Certification" retrieved!
 INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:42] "GET /6 HTTP/1.1" 200 -
-INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:42] "GET /static/css/main.css HTTP/1.1" 304 - -->
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:42] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:20:41] "GET /metrics HTTP/1.1" 200 -
 
 ## Logs from the container running the TechTrends application
 # TODO: paste logs from the Docker container 
+
+(de_venv) E:\Projects\Udacity\DE_ND-techtrends [main ≡ +17 ~0 -0 !]> docker logs -f techtrends
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.17.0.2:3111/ (Press CTRL+C to quit)
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:14:53] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:14:54] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:"About Us" page retrieved!
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:13] "POST /create HTTP/1.1" 302 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:13] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:13] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:root:Article "docker_test" retrieved!
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:18] "GET /7 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:18] "GET /static/css/main.css HTTP/1.1" 304 -
+ERROR:root:Article with id 9 does not exists
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:29] "GET /9 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:29] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:45] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:15:45] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [01/Oct/2022 20:16:01] "GET /metrics HTTP/1.1" 200 -
