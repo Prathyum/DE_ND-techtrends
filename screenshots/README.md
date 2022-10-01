@@ -1,3 +1,3 @@
 ## Screenshots 
 
-Place any project screenshots in this directory.
+A place for all the project screenshots.
