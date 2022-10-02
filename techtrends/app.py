@@ -1,14 +1,33 @@
+from logging import handlers
 import sqlite3
 import logging
+import sys
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
+# Set logger to handle STDOUT and STDERR
+stdout_handler = sys.stdout
+stderr_handler = sys.stderr
+handler = [stderr_handler, stdout_handler]
+
+
+# Setting up logging 
+logging.basicConfig(handlers=(logging.StreamHandler(stream=handler),logging.FileHandler('app.log')), 
+                    level=logging.DEBUG, 
+                    format=' %(levelname)s %(name)s%(asctime)s : %(message)s' 
+                    )
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
+
+connection_count = 0
+
 def get_db_connection():
+
+    global connection_count
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    connection_count += 1
     return connection
 
 # Function to get a post using its ID
@@ -20,17 +39,18 @@ def get_post(post_id):
     return post
 
 # Function to get metrics for /metrics
-def metrics_endpoint(metrics):
+def metrics_endpoint():
     """
     Increment no.of connections used.
     Count the total number of posts.
     """
     connection = get_db_connection()
-    post_count = connection.execute('SELECT count(*) FROM posts').fetchone()
+    
+    count = connection.execute('SELECT count(*) FROM posts').fetchone()
+    post_count = count[0]
     connection.close()
 
-    metrics['db_connection_count'] += 1
-    metrics['post_count'] = post_count[0]
+    return post_count
 
 # Define the Flask application
 app = Flask(__name__)
@@ -39,6 +59,10 @@ app.config['SECRET_KEY'] = 'your secret key'
 # Define the main route of the web application 
 @app.route('/')
 def index():
+    
+    global connection_count
+    connection_count += 1
+    
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
@@ -48,6 +72,10 @@ def index():
 # If the post ID is not found a 404 page is shown
 @app.route('/<int:post_id>')
 def post(post_id):
+
+    global connection_count
+    connection_count += 1
+
     post = get_post(post_id)
     if post is None:
         logging.error('Article with id {} does not exists'.format(post_id))
@@ -65,6 +93,9 @@ def about():
 # Define the post creation functionality 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
+    global connection_count
+    connection_count += 1
+
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
@@ -86,28 +117,29 @@ def create():
 # Define Healthz endpoint
 @app.route('/healthz')
 def healthz():
-
-    return {"result": "OK - healthy"}
-    status_code = 200
+    
+    try:
+        connection = get_db_connection()
+        connection.cursor()
+        connection.execute('SELECT * FROM posts')
+        connection.close()
+        return {'result': 'OK - healthy'}
+    except Exception:
+        return {'result': 'NO - unhealthy'}, 500
 
 # Define Metrics endpoint
 @app.route('/metrics', methods=['GET'])
 def metrics():
-    metrics = {
-        'db_connection_count': 0,
-        'post_count': None
+    global connection_count
+
+    post_count = metrics_endpoint()
+    response = {
+        'post_count': post_count,
+        'db_connection_count': connection_count,
     }
-
-    metrics_endpoint(metrics)
-
-    response = app.response_class(
-        response=json.dumps(metrics),
-        status=200,
-        mimetype='application/json')
-
+    
     return response
 
 # start the application on port 3111
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
     app.run(host='0.0.0.0', port='3111')
