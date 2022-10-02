@@ -1,16 +1,14 @@
 ## Docker commands used to build the application 
-# TODO: insert the docker build command
 
 docker build . -t techtrends
 
 ## Docker commands used to run the application
-# TODO: insert the docker run command
 
 docker run -d --name techtrends -p 7111:3111 techtrends
 
 ## Docker commands used to get the application logs
-# TODO: insert the docker logs command
 
+docker logs -f techtrends
 
 ## Logs from app.py (local - outside docker container) :
 
@@ -45,7 +43,6 @@ INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:19:42] "GET /static/css/main.css
 INFO:werkzeug:192.168.0.105 - - [01/Oct/2022 00:20:41] "GET /metrics HTTP/1.1" 200 -
 
 ## Logs from the container running the TechTrends application
-# TODO: paste logs from the Docker container 
 
 (de_venv) E:\Projects\Udacity\DE_ND-techtrends [main ≡ +17 ~0 -0 !]> docker logs -f techtrends
  * Serving Flask app 'app' (lazy loading)
